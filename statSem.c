@@ -379,6 +379,7 @@ void staticSemantics(struct Node* root){
     for (int i = stack.top; i >= 0; i--) {
         printf("%s %s\n", stack.items[i].str,stack.items[i].num);
     }
+    printf("iftemp 0\ntemp 0\nrepeattemp 0\nwhiletemp 0\nstacktemp 0\n");
     
     popAllAndFree(&stack);
 }
