@@ -41,7 +41,7 @@ void printToken(int tkNum, char* word, int lineNum, int startPos){
 void displayTokenList(struct Token* head){
         printf("Token List:\n");
         while(head != NULL){
-                printf("Token ID: %s \n", head->idTk);
+                printf("Token ID: %s   %s\n", head->idTk, head->tokenInstance);
                 head = head->next;
         }
 }
@@ -114,15 +114,20 @@ const char* keyWords[] = {
         "set", "func"
 };
 
-int isKeyWord(char* word){
-        int x;
-        for(x = 0; x < 17; x++){
-                //printf("|%s| compared to |%s|: %d \n", word, keyWords[x],strcmp(word,keyWords[x]));
-                if(strcmp(word,keyWords[x]) == 0){
-                        return x;
-                }
+int isKeyWord(char* word) {
+    int wordLength = strlen(word);
+
+    for (int i = 0; i < wordLength; i++) {
+        for (int j = 0; j < 17; j++) {
+            int keywordLength = strlen(keyWords[j]);
+            if (strncmp(word + i, keyWords[j], keywordLength) == 0) {
+                //printf("i is %d\n", i);
+                return i; // Return the index where the keyword starts in the word
+            }
         }
-        return -1;
+    }
+
+    return -1; // Keyword not found
 }
 
 
@@ -172,8 +177,9 @@ struct Token* scanner(FILE *file){
                 if(ch == ' ' || ch == '\t'){
                         //check if keyword in S2
                         if(state == S2){
-                                word[index] = '\0';
-                                if(isKeyWord(word) > -1){
+                                //word[index] = '\0';
+                                if(isKeyWord(word) == 0){
+                                        word[index] = '\0';
                                         state = KW_TK;
                                         fseek(file, -1, SEEK_CUR);
                                         charNum--;
@@ -183,6 +189,20 @@ struct Token* scanner(FILE *file){
                                         state = 0;
                                         index = 0;
                                         memset(word, '\0', sizeof(word));
+                                }else if(isKeyWord(word) > 0){
+                                        int wordlength = strlen(word);
+                                        word[isKeyWord(word)] = '\0';
+                                        state = IDENT_TK;
+                                        fseek(file, -(wordlength-(isKeyWord(word)+1)), SEEK_CUR);
+                                        int y = 0;
+                                        for(y; y < (wordlength-(isKeyWord(word)+1)); y++){
+                                                charNum--;
+                                        }
+                                        printToken(state, word, lineNum, startPosition);
+                                        insertToken(&head, state, word, lineNum, startPosition);
+                                        //printf("State: %d ,Token: %s, at %d.%d\n", state, word, lineNum, startPosition);
+                                        state = 0;
+                                        index = 0;
                                 }
                         }
                 }else{
@@ -240,13 +260,23 @@ struct Token* scanner(FILE *file){
                                         startPosition++;
                                 }else if(state == IDENT_TK){
                                         word[index] = '\0';
-                                        if(isKeyWord(word) > -1){
+                                        //printf("IdenWord: %s, func value: %d\n", word, isKeyWord(word));
+                                        if(isKeyWord(word) == 0){
                                                 state = KW_TK;
                                                 fseek(file, -1, SEEK_CUR);
                                                 if(ch == '\n'){
                                                         lineNum--;
                                                 }
                                                 charNum--;
+                                        }else if(isKeyWord(word) > 0){
+                                                int wordlength = strlen(word);
+                                                word[isKeyWord(word)] = '\0';
+                                                state = IDENT_TK;
+                                                fseek(file, -(wordlength-(isKeyWord(word)+1)), SEEK_CUR);
+                                                int y = 0;
+                                                for(y; y < (wordlength-(isKeyWord(word)+1)); y++){
+                                                        charNum--;
+                                                }
                                         }else{
                                                 if(ch == '\n'){
                                                         lineNum--;

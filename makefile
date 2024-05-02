@@ -22,3 +22,4 @@ clean:
 	rm -f Project4 *.o
 	rm -f filteredFile.txt
 	rm -f tempfile.txt
+	rm -f Project4.exe.stackdump

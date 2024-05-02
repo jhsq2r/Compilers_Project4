@@ -63,17 +63,17 @@ int main(int argc, char** argv) {
         displayTokenList(tokenList);
 
         struct Node* tree;
-      //  tree = parser(tokenList);
+        tree = parser(tokenList);
 
-      //  staticSemantics(tree);
+        staticSemantics(tree);
 
-      //  freeTree(tree);
+        freeTree(tree);
 
-        //while(tokenList != NULL){
-        //        struct Token* temp = tokenList;
-        //        tokenList = tokenList->next;
-        //       free(temp);
-        //}
+        // while(tokenList != NULL){
+        //         struct Token* temp = tokenList;
+        //         tokenList = tokenList->next;
+        //         free(temp);
+        // }
 
         fclose(file);
         fclose(filterfile);
