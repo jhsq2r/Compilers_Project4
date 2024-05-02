@@ -372,6 +372,7 @@ void staticSemantics(struct Node* root){
     initializeStack(&stack);
 
     printf("STATIC SEMANTICS ERRORS:\n");
+    printf("\nASM CODE:\n");
     semantics(root, &stack);
 
     printf("STOP\n");

@@ -183,7 +183,7 @@ struct Token* scanner(FILE *file){
                                         state = KW_TK;
                                         fseek(file, -1, SEEK_CUR);
                                         charNum--;
-                                        printToken(state, word, lineNum, startPosition);
+                                        //printToken(state, word, lineNum, startPosition);
                                         insertToken(&head, state, word, lineNum, startPosition);
                                         //printf("State: %d ,Token: %s, at %d.%d\n", state, word, lineNum, startPosition);
                                         state = 0;
@@ -198,7 +198,7 @@ struct Token* scanner(FILE *file){
                                         for(y; y < (wordlength-(isKeyWord(word)+1)); y++){
                                                 charNum--;
                                         }
-                                        printToken(state, word, lineNum, startPosition);
+                                        //printToken(state, word, lineNum, startPosition);
                                         insertToken(&head, state, word, lineNum, startPosition);
                                         //printf("State: %d ,Token: %s, at %d.%d\n", state, word, lineNum, startPosition);
                                         state = 0;
@@ -291,7 +291,7 @@ struct Token* scanner(FILE *file){
                                         }
                                         charNum--;
                                 }
-                                printToken(state, word, lineNum, startPosition);
+                                //printToken(state, word, lineNum, startPosition);
                                 insertToken(&head, state, word, lineNum, startPosition);
                                 //printf("State: %d ,Token: %s, at %d.%d\n", state, word, lineNum, startPosition);
                                 state = 0;
@@ -299,7 +299,7 @@ struct Token* scanner(FILE *file){
                                 memset(word, '\0', sizeof(word));
                         }else{
                                 lineNum--;
-                                printToken(state, word, lineNum, startPosition);
+                                //printToken(state, word, lineNum, startPosition);
                                 insertToken(&head, state, word, lineNum, startPosition);
                                 return head;
                                 //printf("State: %d ,Token: %s, at %d.%d\n", state, word, lineNum, startPosition);

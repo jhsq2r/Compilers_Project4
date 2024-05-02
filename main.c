@@ -54,13 +54,14 @@ int main(int argc, char** argv) {
                 fseek(file, 0, SEEK_SET);
         }
 
+        
         FILE *filterfile;
         filterfile = fopen("filteredFile.txt", "w+");
         filter(file,filterfile);
         fseek(filterfile, 0, SEEK_SET);
 
         struct Token* tokenList = scanner(filterfile);
-        displayTokenList(tokenList);
+        //displayTokenList(tokenList);
 
         struct Node* tree;
         tree = parser(tokenList);
@@ -75,6 +76,7 @@ int main(int argc, char** argv) {
         //         free(temp);
         // }
 
+        
         fclose(file);
         fclose(filterfile);
 

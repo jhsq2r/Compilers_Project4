@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<string.h>
 #include"parser.h"  
-#include<windows.h>
+
 
 
 struct Node* getNode(char* name){
@@ -499,7 +499,7 @@ struct Node* stat(struct Token* list){
         }else{
                 //error in stat
                 printf("Error: (Stat)Expected something but got %s\n", currentToken(tokenNum, list)->tokenInstance);
-                Sleep(5000);
+                //Sleep(5000);
 
         }
 
